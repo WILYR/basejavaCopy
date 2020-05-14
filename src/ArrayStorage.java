@@ -10,8 +10,8 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-            storage[sizeStorage] = r;
-            sizeStorage++;
+        storage[sizeStorage] = r;
+        sizeStorage++;
     }
 
     public Resume get(String uuid) {
@@ -34,8 +34,8 @@ public class ArrayStorage {
         for (int i = 0; i < sizeStorage; i++) {
             if (!(storage[i] instanceof Resume)) {
                 Resume tmp = storage[i];
-                storage[i] = storage[i+1];
-                storage[i+1] = tmp;
+                storage[i] = storage[i + 1];
+                storage[i + 1] = tmp;
             }
         }
         sizeStorage--;
