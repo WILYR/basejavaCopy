@@ -6,6 +6,9 @@ public class ArrayStorage {
     private int sizeStorage = 0;
 
     public void clear() {
+        for (int i = 0; i < sizeStorage; i++) {
+            storage[i] = null;
+        }
         sizeStorage = 0;
     }
 
@@ -26,16 +29,17 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
+        int count = 0;
         for (int i = 0; i < sizeStorage; i++) {
             if (uuid.equals(storage[i].uuid)) {
                 storage[i] = null;
+                count = i;
             }
         }
         for (int i = 0; i < sizeStorage; i++) {
-            if (!(storage[i] instanceof Resume)) {
-                Resume tmp = storage[i];
+            if (i == count) {
                 storage[i] = storage[i + 1];
-                storage[i + 1] = tmp;
+                count++;
             }
         }
         sizeStorage--;
