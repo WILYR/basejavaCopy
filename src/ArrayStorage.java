@@ -6,14 +6,12 @@ public class ArrayStorage {
     private int sizeStorage = 0;
 
     public void clear() {
-        for (int i = 0; i < sizeStorage; i++) {
-            storage[i].uuid = null;
-        }
+        sizeStorage = 0;
     }
 
     public void save(Resume r) {
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == null) {
+        for (int i = 0; i < sizeStorage + 1; i++) {
+            if (!(storage[i] instanceof Resume)) {
                 storage[i] = r;
                 sizeStorage++;
                 break;
@@ -21,20 +19,27 @@ public class ArrayStorage {
         }
     }
 
-    public String get(String uuid) {
-        return uuid;
+    public Resume get(String uuid) {
+        Resume memory = null;
+        for (int i = 0; i < sizeStorage; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                memory = storage[i];
+            }
+
+        }
+        return memory;
     }
 
     public void delete(String uuid) {
         for (int i = 0; i < sizeStorage; i++) {
             if (uuid.equals(storage[i].uuid)) {
-                storage[i].uuid = null;
+                storage[i] = null;
             }
         }
         int zeroCount = 0;
         for (int i = 0; i < sizeStorage; i++) {
-            if (storage[i].uuid != null) {
-                storage[zeroCount++].uuid = storage[i].uuid;
+            if (storage[i] instanceof Resume) {
+                storage[zeroCount++] = storage[i];
             }
         }
         sizeStorage--;
