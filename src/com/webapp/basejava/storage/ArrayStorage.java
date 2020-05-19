@@ -9,12 +9,12 @@ public class ArrayStorage {
     private int sizeStorage = 0;
 
     public void clear() {
-        Arrays.fill(storage,0, sizeStorage, null);
+        Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
     }
 
     public void save(Resume r) {
-        if(sizeStorage == storage.length - 1) {
+        if (sizeStorage == storage.length - 1) {
             System.out.println("\nResume base is overdraw");
         } else {
             boolean isResumeInBase = false;
@@ -25,7 +25,7 @@ public class ArrayStorage {
                     break;
                 }
             }
-            if(!isResumeInBase) {
+            if (!isResumeInBase) {
                 storage[sizeStorage] = r;
                 sizeStorage++;
             }
@@ -34,7 +34,7 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
         Resume resume = null;
-        if(sizeStorage == 0) {
+        if (sizeStorage == 0) {
             System.out.println("\nStorage without resume");
         } else {
             for (int i = 0; i < sizeStorage; i++) {
@@ -47,7 +47,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        if(sizeStorage == 0) {
+        if (sizeStorage == 0) {
             System.out.println("\nStorage without resume");
         } else {
             int count = 0;
@@ -75,7 +75,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume, String updateUuid) {
-        if(sizeStorage == 0) {
+        if (sizeStorage == 0) {
             System.out.println("\nStorage without resume");
         } else {
             resume.setUuid(updateUuid);
