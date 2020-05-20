@@ -39,7 +39,7 @@ public class ArrayStorage {
         Resume resume = null;
         if (checkStorageSize()) {
             int indexUuid = isResumeUUidInBase(uuid);
-            if(indexUuid != -1) {
+            if (indexUuid != -1) {
                 resume = storage[indexUuid];
             }
         }
@@ -50,7 +50,7 @@ public class ArrayStorage {
         int indexUUid = -1;
         for (int i = 0; i < sizeStorage; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                 indexUUid = i;
+                indexUUid = i;
             }
         }
         return indexUUid;
@@ -68,7 +68,7 @@ public class ArrayStorage {
     public void delete(String uuid) {
         if (checkStorageSize()) {
             int indexUuid = isResumeUUidInBase(uuid);
-            if(indexUuid != -1) {
+            if (indexUuid != -1) {
                 storage[indexUuid] = null;
             }
             while (indexUuid < sizeStorage - 1) {
@@ -90,7 +90,7 @@ public class ArrayStorage {
     public void update(Resume resume) {
         if (checkStorageSize()) {
             int resumeIndex = isResumeInStorage(resume);
-            if(resumeIndex != -1) {
+            if (resumeIndex != -1) {
                 storage[resumeIndex] = resume;
             }
         }
