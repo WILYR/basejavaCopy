@@ -19,6 +19,7 @@ public class ArrayStorage {
         } else {
             if (isResumeInStorage(r) == -1) {
                 storage[sizeStorage] = r;
+                System.out.println("Resume " + r + " save");
                 sizeStorage++;
             }
         }
@@ -69,6 +70,7 @@ public class ArrayStorage {
         if (checkStorageSize()) {
             int indexUuid = isResumeUUidInBase(uuid);
             if (indexUuid != -1) {
+                System.out.println("Resume " + storage[indexUuid] + " delete");
                 storage[indexUuid] = null;
             }
             while (indexUuid < sizeStorage - 1) {
@@ -91,6 +93,7 @@ public class ArrayStorage {
         if (checkStorageSize()) {
             int resumeIndex = isResumeInStorage(resume);
             if (resumeIndex != -1) {
+                System.out.println("Resume " + (resumeIndex + 1) + " successfully update");
                 storage[resumeIndex] = resume;
             }
         }
