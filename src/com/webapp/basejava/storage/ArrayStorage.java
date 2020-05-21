@@ -11,13 +11,14 @@ public class ArrayStorage {
     public void clear() {
         Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
+        System.out.println("\nStorage was cleared");
     }
 
     public void save(Resume r) {
         if (sizeStorage == storage.length) {
             System.out.println("\nResume base is overdraw");
         } else {
-            if (isResumeInStorage(r) == -1) {
+            if (getIndexResume(r) == -1) {
                 storage[sizeStorage] = r;
                 System.out.println("Resume " + r + " save");
                 sizeStorage++;
@@ -25,39 +26,35 @@ public class ArrayStorage {
         }
     }
 
-    public int isResumeInStorage(Resume resume) {
-        int link = -1;
+    private int getIndexResume(Resume resume) {
         for (int i = 0; i < sizeStorage; i++) {
             if (storage[i] == resume) {
-                link = i;
-                break;
+                return i;
             }
         }
-        return link;
+        return -1;
     }
 
     public Resume get(String uuid) {
         Resume resume = null;
-        if (checkStorageSize()) {
-            int indexUuid = isResumeUUidInBase(uuid);
-            if (indexUuid != -1) {
-                resume = storage[indexUuid];
-            }
+        int indexUuid = getUuidIndex(uuid);
+        if (indexUuid != -1) {
+            resume = storage[indexUuid];
         }
+        System.out.print("\nGet " + resume + ": ");
         return resume;
     }
 
-    public int isResumeUUidInBase(String uuid) {
-        int indexUUid = -1;
+    private int getUuidIndex(String uuid) {
         for (int i = 0; i < sizeStorage; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                indexUUid = i;
+                return i;
             }
         }
-        return indexUUid;
+        return -1;
     }
 
-    public boolean checkStorageSize() {
+    private boolean checkStorageSize() {
         if (sizeStorage == 0) {
             System.out.println("\nStorage without resume");
             return false;
@@ -68,7 +65,7 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         if (checkStorageSize()) {
-            int indexUuid = isResumeUUidInBase(uuid);
+            int indexUuid = getUuidIndex(uuid);
             if (indexUuid != -1) {
                 System.out.println("Resume " + storage[indexUuid] + " delete");
                 storage[indexUuid] = null;
@@ -82,20 +79,20 @@ public class ArrayStorage {
     }
 
     public Resume[] getAll() {
+        System.out.println("\nGet All");
         return Arrays.copyOf(storage, sizeStorage);
     }
 
     public int size() {
+        System.out.print("Size: ");
         return sizeStorage;
     }
 
     public void update(Resume resume) {
-        if (checkStorageSize()) {
-            int resumeIndex = isResumeInStorage(resume);
-            if (resumeIndex != -1) {
-                storage[resumeIndex] = resume;
-                System.out.println("Resume " + (resumeIndex + 1) + " successfully update with " + storage[resumeIndex]);
-            }
+        int Index = getIndexResume(resume);
+        if (Index != -1) {
+            storage[Index] = resume;
+            System.out.println("Resume " + (Index + 1) + " successfully update with " + storage[Index]);
         }
     }
 }
