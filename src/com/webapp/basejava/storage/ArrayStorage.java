@@ -93,8 +93,8 @@ public class ArrayStorage {
         if (checkStorageSize()) {
             int resumeIndex = isResumeInStorage(resume);
             if (resumeIndex != -1) {
-                System.out.println("Resume " + (resumeIndex + 1) + " successfully update");
                 storage[resumeIndex] = resume;
+                System.out.println("Resume " + (resumeIndex + 1) + " successfully update with " + storage[resumeIndex]);
             }
         }
     }
