@@ -18,6 +18,7 @@ public class MainTestArrayStorage {
         System.out.println(ARRAY_STORAGE.get(r1.getUuid()));
         r1.setUuid("uuid01");
         ARRAY_STORAGE.update(r1);
+        ARRAY_STORAGE.delete(r2.getUuid());
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 

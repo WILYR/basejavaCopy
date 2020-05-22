@@ -17,22 +17,11 @@ public class ArrayStorage {
     public void save(Resume r) {
         if (sizeStorage == storage.length) {
             System.out.println("\nResume base is overdraw");
-        } else {
-            if (getIndexResume(r) == -1) {
-                storage[sizeStorage] = r;
-                System.out.println("Resume " + r + " save");
-                sizeStorage++;
-            }
+        } else if (getUuidIndex(r.getUuid()) == -1) {
+            storage[sizeStorage] = r;
+            System.out.println("Resume " + r + " save");
+            sizeStorage++;
         }
-    }
-
-    private int getIndexResume(Resume resume) {
-        for (int i = 0; i < sizeStorage; i++) {
-            if (storage[i] == resume) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public Resume get(String uuid) {
@@ -54,27 +43,14 @@ public class ArrayStorage {
         return -1;
     }
 
-    private boolean checkStorageSize() {
-        if (sizeStorage == 0) {
-            System.out.println("\nStorage without resume");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public void delete(String uuid) {
-        if (checkStorageSize()) {
-            int indexUuid = getUuidIndex(uuid);
-            if (indexUuid != -1) {
-                System.out.println("Resume " + storage[indexUuid] + " delete");
-                storage[indexUuid] = null;
-            }
-            while (indexUuid < sizeStorage - 1) {
-                storage[indexUuid] = storage[indexUuid + 1];
-                indexUuid++;
-            }
+        int indexUuid = getUuidIndex(uuid);
+        if (indexUuid != -1) {
+            System.out.println("Resume " + storage[indexUuid] + " delete");
+            System.arraycopy(storage, indexUuid + 1, storage, indexUuid, sizeStorage - indexUuid - 1);
             sizeStorage--;
+        } else {
+            System.out.println("Delete Error!");
         }
     }
 
@@ -89,10 +65,12 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int Index = getIndexResume(resume);
-        if (Index != -1) {
-            storage[Index] = resume;
-            System.out.println("Resume " + (Index + 1) + " successfully update with " + storage[Index]);
+        int index = getUuidIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index] = resume;
+            System.out.println("Resume " + (index + 1) + " successfully update with " + storage[index]);
+        } else {
+            System.out.println("Update Error!");
         }
     }
 }
