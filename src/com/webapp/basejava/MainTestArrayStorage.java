@@ -4,7 +4,7 @@ import com.webapp.basejava.model.Resume;
 import com.webapp.basejava.storage.ArrayStorage;
 
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static final ArrayStorage STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -14,29 +14,29 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
-        ARRAY_STORAGE.save(r1);
-        System.out.println(ARRAY_STORAGE.get(r1.getUuid()));
+        STORAGE.save(r1);
+        System.out.println(STORAGE.get(r1.getUuid()));
         r1.setUuid("uuid01");
-        ARRAY_STORAGE.update(r1);
-        ARRAY_STORAGE.delete(r2.getUuid());
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
+        STORAGE.update(r1);
+        STORAGE.delete(r2.getUuid());
+        STORAGE.save(r2);
+        STORAGE.save(r3);
 
-        System.out.println(ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.println(ARRAY_STORAGE.size());
-        System.out.println(ARRAY_STORAGE.get("dummy"));
+        System.out.println(STORAGE.get(r1.getUuid()));
+        System.out.println(STORAGE.size());
+        System.out.println(STORAGE.get("dummy"));
 
         printAll();
-        ARRAY_STORAGE.delete(r2.getUuid());
+        STORAGE.delete(r2.getUuid());
         printAll();
-        ARRAY_STORAGE.clear();
+        STORAGE.clear();
         printAll();
 
-        System.out.println(ARRAY_STORAGE.size());
+        System.out.println(STORAGE.size());
     }
 
     static void printAll() {
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : STORAGE.getAll()) {
             System.out.println(r);
         }
     }
