@@ -13,8 +13,11 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void remove(int indexUuid) {
-        System.out.println("Resume " + storage[indexUuid] + " delete");
-        System.arraycopy(storage, indexUuid + 1, storage, indexUuid, sizeStorage - indexUuid - 1);
+        for (int i = 0; i < sizeStorage; i++) {
+            if (i == indexUuid) {
+                storage[indexUuid] = storage[indexUuid + 1];
+            }
+        }
         sizeStorage--;
     }
 
