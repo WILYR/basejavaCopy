@@ -16,7 +16,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         Resume resume = null;
-        int indexUuid = getUuidIndex(uuid);
+        int indexUuid = getResumeIndex(uuid);
         if (indexUuid != -1) {
             resume = storage[indexUuid];
         }
@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorage implements Storage {
         return resume;
     }
 
-    protected abstract int getUuidIndex(String uuid);
+    protected abstract int getResumeIndex(String uuid);
 
     public Resume[] getAll() {
         System.out.println("\nGet All");
@@ -40,8 +40,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         if (sizeStorage == STORAGE_LIMIT) {
             System.out.println("\nResume base is overdraw");
-        } else if (getUuidIndex(r.getUuid()) == -1) {
-            insertByn(r);
+        } else if (getResumeIndex(r.getUuid()) == -1) {
+            insert(r);
             System.out.println("Resume " + r + " save");
             sizeStorage++;
         } else {
@@ -49,21 +49,21 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract void insertByn(Resume value);
+    protected abstract void insert(Resume resume);
 
     public void delete(String uuid) {
-        int indexUuid = getUuidIndex(uuid);
+        int indexUuid = getResumeIndex(uuid);
         if (indexUuid != -1) {
-            System.out.println("Resume " + storage[indexUuid] + " delete");
-            System.arraycopy(storage, indexUuid + 1, storage, indexUuid, sizeStorage - indexUuid - 1);
-            sizeStorage--;
+            remove(indexUuid);
         } else {
             System.out.println("Error! " + uuid + " couldn't delete");
         }
     }
 
+    protected abstract void remove(int indexUuid);
+
     public void update(Resume resume) {
-        int index = getUuidIndex(resume.getUuid());
+        int index = getResumeIndex(resume.getUuid());
         if (index != -1) {
             storage[index] = resume;
             System.out.println("Resume " + (index + 1) + " successfully update with " + storage[index]);

@@ -1,6 +1,5 @@
 package com.webapp.basejava.storage;
 
-import com.sun.javafx.scene.control.TableColumnComparatorBase;
 import com.webapp.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -8,18 +7,22 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void insertByn(Resume value) {
-        int j = Arrays.binarySearch(storage, 0, sizeStorage, value);
+    protected void insert(Resume resume) {
+        int j = Arrays.binarySearch(storage, 0, sizeStorage, resume);
         if (j < 0) {
             j = -j - 1;
         }
         System.arraycopy(storage, j, storage, j + 1, sizeStorage - j);
-        storage[j] = value;
-        sizeStorage++;
+        storage[j] = resume;
     }
 
     @Override
-    protected int getUuidIndex(String uuid) {
+    protected void remove(int indexUuid) {
+        System.arraycopy(storage, indexUuid + 1, storage, indexUuid, sizeStorage - indexUuid - 1);
+    }
+
+    @Override
+    protected int getResumeIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
         return Arrays.binarySearch(storage, 0, sizeStorage, searchKey);

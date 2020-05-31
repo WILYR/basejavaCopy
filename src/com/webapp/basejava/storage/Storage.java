@@ -4,18 +4,18 @@ import com.webapp.basejava.model.Resume;
 
 public interface Storage {
 
-    public void clear();
+    void clear();
 
-    public void save(Resume r);
+    void save(Resume r);
 
-    public Resume get(String uuid);
+    Resume get(String uuid);
 
-    public void delete(String uuid);
+    void delete(String uuid);
 
-    public Resume[] getAll();
+    Resume[] getAll();
 
-    public int size();
+    int size();
 
-    public void update(Resume resume);
+    void update(Resume resume);
 
 }
