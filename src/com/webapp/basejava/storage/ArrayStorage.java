@@ -2,8 +2,6 @@ package com.webapp.basejava.storage;
 
 import com.webapp.basejava.model.Resume;
 
-import java.util.Arrays;
-
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
