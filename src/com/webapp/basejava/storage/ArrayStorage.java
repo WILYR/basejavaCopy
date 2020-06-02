@@ -7,17 +7,13 @@ import java.util.Arrays;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void insert(Resume resume) {
+    protected void insert(Resume resume, int index) {
         storage[sizeStorage] = resume;
     }
 
     @Override
     protected void remove(int indexUuid) {
-        for (int i = 0; i < sizeStorage; i++) {
-            if (i == indexUuid) {
-                storage[indexUuid] = storage[indexUuid + 1];
-            }
-        }
+        storage[indexUuid] = storage[sizeStorage - 1];
         sizeStorage--;
     }
 

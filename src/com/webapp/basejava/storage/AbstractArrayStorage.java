@@ -41,7 +41,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (sizeStorage == STORAGE_LIMIT) {
             System.out.println("\nResume base is overdraw");
         } else if (getResumeIndex(r.getUuid()) == -1) {
-            insert(r);
+            insert(r, -1);
             System.out.println("Resume " + r + " save");
             sizeStorage++;
         } else {
@@ -49,11 +49,12 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract void insert(Resume resume);
+    protected abstract void insert(Resume resume, int index);
 
     public void delete(String uuid) {
         int indexUuid = getResumeIndex(uuid);
         if (indexUuid != -1) {
+            System.out.println("Resume " + storage[indexUuid] + " delete");
             remove(indexUuid);
         } else {
             System.out.println("Error! " + uuid + " couldn't delete");
