@@ -24,15 +24,13 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        Resume resume = null;
-        int indexUuid = getResumeIndex(uuid);
-        if (indexUuid < 0) {
-            throw new NotExistStorageException(resume.getUuid());
+        int index = getResumeIndex(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(storage[index].getUuid());
         } else {
-            resume = storage[indexUuid];
-            System.out.print("\nGet " + resume + ": ");
+            System.out.print("\nGet " + storage[index] + ": ");
         }
-        return resume;
+        return storage[index];
     }
 
     public Resume[] getAll() {
@@ -48,23 +46,23 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume r) {
         if (sizeStorage == STORAGE_LIMIT) {
-            throw new StorageException("Storage overdraw",r.getUuid());
+            throw new StorageException("Storage overdraw", r.getUuid());
         } else if (getResumeIndex(r.getUuid()) > 0) {
             throw new ExistStorageException(r.getUuid());
         } else {
-            insert(r, -1);
+            insert(r, getResumeIndex(r.getUuid()));
             System.out.println("Resume " + r + " save");
             sizeStorage++;
         }
     }
 
     public void delete(String uuid) {
-        int indexUuid = getResumeIndex(uuid);
-        if (indexUuid < 0) {
+        int index = getResumeIndex(uuid);
+        if (index < 0) {
             throw new NotExistStorageException(uuid);
         } else {
-            System.out.println("Resume " + storage[indexUuid] + " delete");
-            remove(indexUuid);
+            System.out.println("Resume " + storage[index] + " delete");
+            remove(index);
         }
     }
 

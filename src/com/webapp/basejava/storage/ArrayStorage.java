@@ -10,8 +10,8 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void remove(int indexUuid) {
-        storage[indexUuid] = storage[sizeStorage - 1];
+    protected void remove(int index) {
+        storage[index] = storage[sizeStorage - 1];
         sizeStorage--;
     }
 
