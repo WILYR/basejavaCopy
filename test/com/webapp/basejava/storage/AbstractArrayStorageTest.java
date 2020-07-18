@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorageTest {
         getTest(r3);
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
         storage.get("dummy");
     }
@@ -67,12 +67,12 @@ public abstract class AbstractArrayStorageTest {
         getTest(r4);
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
         int sizeUntilDelete = storage.size();
         storage.delete("uuid2");
+        Assert.assertEquals(storage.size(),sizeUntilDelete - 1);
         storage.get("uuid2");
-        Assert.assertFalse(sizeUntilDelete - 1 == storage.size());
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -80,18 +80,12 @@ public abstract class AbstractArrayStorageTest {
         storage.delete("dummy");
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void update() throws Exception {
-        Resume r4 = new Resume("uuid4");
-        storage.save(r4);
-        r4 = r1;
-        storage.update(r4);
-        storage.get("uuid4");
-    }
-
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void updateNotExist() throws Exception {
-        storage.get("dummy");
+        storage.update(r2);
+        Assert.assertTrue(r2 == storage.get("uuid2"));
+        Resume r5 = new Resume("uuid5");
+        storage.update(r5);
     }
 
     @Test(expected = StorageException.class)
@@ -108,7 +102,7 @@ public abstract class AbstractArrayStorageTest {
         }
     }
 
-    public void getTest(Resume r) {
+    private void getTest(Resume r) {
         Assert.assertNotNull(storage.get(r.getUuid()));
         Assert.assertEquals(r, storage.get(r.getUuid()));
     }

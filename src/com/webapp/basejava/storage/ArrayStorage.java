@@ -12,7 +12,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void remove(int index) {
         storage[index] = storage[sizeStorage - 1];
-        sizeStorage--;
     }
 
     @Override
