@@ -34,9 +34,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() throws Exception {
-        getTest(r1);
-        getTest(r2);
-        getTest(r3);
+        Assert.assertEquals(r1, storage.get(r1.getUuid()));
+        Assert.assertEquals(r2, storage.get(r2.getUuid()));
+        Assert.assertEquals(r3, storage.get(r3.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -64,14 +64,14 @@ public abstract class AbstractArrayStorageTest {
         Resume r4 = new Resume("uuid4");
         storage.save(r4);
         Assert.assertEquals(4, storage.size());
-        getTest(r4);
+        Assert.assertEquals(r4, storage.get(r4.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
         int sizeUntilDelete = storage.size();
         storage.delete("uuid2");
-        Assert.assertEquals(storage.size(),sizeUntilDelete - 1);
+        Assert.assertEquals(sizeUntilDelete - 1, storage.size());
         storage.get("uuid2");
     }
 
@@ -82,28 +82,21 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void update() throws Exception {
-        storage.update(r2);
-        Assert.assertTrue(r2 == storage.get("uuid2"));
         Resume r5 = new Resume("uuid5");
         storage.update(r5);
     }
 
     @Test(expected = StorageException.class)
-    public void storageException() throws Exception {
+    public void saveOverflow() throws Exception {
         storage.clear();
         try {
             for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
-            storage.save(new Resume());
-            Assert.fail();
         } catch (StorageException e) {
-            throw new StorageException("Storage overdraw", r1.getUuid());
+            Assert.fail("Resume base error");
         }
+        storage.save(new Resume());
     }
 
-    private void getTest(Resume r) {
-        Assert.assertNotNull(storage.get(r.getUuid()));
-        Assert.assertEquals(r, storage.get(r.getUuid()));
-    }
 }
