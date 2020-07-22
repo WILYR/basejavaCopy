@@ -23,4 +23,39 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         return -1;
     }
+
+    @Override
+    protected void getColl() {
+
+    }
+
+    @Override
+    protected void saveColl() {
+
+    }
+
+    @Override
+    protected void clearColl() {
+
+    }
+
+    @Override
+    protected void deleteColl() {
+
+    }
+
+    @Override
+    protected void getAllColl() {
+
+    }
+
+    @Override
+    protected void SizeColl() {
+
+    }
+
+    @Override
+    protected void updateColl() {
+
+    }
 }
