@@ -16,20 +16,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void insert(Resume resume, int index);
 
-    protected abstract int getResumeIndex(String uuid);
+    protected abstract Object getKey(String uuid);
 
     public int size() {
         System.out.print("Size: ");
         return sizeStorage;
     }
 
-    public Resume get(String uuid) {
-        int index = getResumeIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
+    @Override
+    public Resume getImplementation(Object key) {
+        if ((Integer) key < 0) {
+            throw new NotExistStorageException(storage[(Integer) key].getUuid());
         }
-        System.out.print("\nGet " + storage[index] + ": ");
-        return storage[index];
+        System.out.print("\nGet " + storage[(Integer) key] + ": ");
+        return storage[(Integer) key];
     }
 
     public Resume[] getAll() {
@@ -37,39 +37,40 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, sizeStorage);
     }
 
-    public void clear() {
+    @Override
+    public void clearImplementation() {
         Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
-        System.out.println("\nStorage was cleared");
     }
 
-    public void save(Resume r) {
+    @Override
+    public void saveImplementation(Resume r, Object key) {
         if (sizeStorage == STORAGE_LIMIT) {
             throw new StorageException("Storage overdraw", r.getUuid());
-        } else if (getResumeIndex(r.getUuid()) > 0) {
+        } else if ((Integer) getKey(r.getUuid()) > 0) {
             throw new ExistStorageException(r.getUuid());
         }
-        insert(r, getResumeIndex(r.getUuid()));
+        insert(r, (Integer) key);
         System.out.println("Resume " + r + " save");
         sizeStorage++;
     }
 
-    public void delete(String uuid) {
-        int index = getResumeIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
+    @Override
+    public void deleteImplementation(Object key) {
+        if ((Integer) key < 0) {
+            throw new NotExistStorageException(storage[(Integer) key].getUuid());
         }
-        System.out.println("Resume " + storage[index] + " delete");
-        remove(index);
+        System.out.println("Resume " + storage[(Integer) key] + " delete");
+        remove((Integer) key);
         sizeStorage--;
     }
 
-    public void update(Resume resume) {
-        int index = getResumeIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
+    @Override
+    public void updateImplementation(Resume r, Object key) {
+        if ((Integer) key < 0) {
+            throw new NotExistStorageException(r.getUuid());
         }
-        storage[index] = resume;
-        System.out.println("Resume " + (index + 1) + " successfully update with " + storage[index]);
+        storage[(Integer) key] = r;
+        System.out.println("Resume " + ((Integer) key + 1) + " successfully update with " + storage[(Integer) key]);
     }
 }

@@ -3,53 +3,41 @@ package com.webapp.basejava.storage;
 import com.webapp.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
+    protected abstract void clearImplementation();
 
-    protected abstract void getColl();
+    protected abstract void saveImplementation(Resume r, Object key);
 
-    protected abstract void saveColl();
+    protected abstract Object getKey(String uuid);
 
-    protected abstract void clearColl();
+    protected abstract Resume getImplementation(Object key);
 
-    protected abstract void deleteColl();
+    protected abstract void deleteImplementation(Object key);
 
-    protected abstract void getAllColl();
+    protected abstract void updateImplementation(Resume r, Object key);
 
-    protected abstract void SizeColl();
-
-    protected abstract void updateColl();
-
-    @Override
     public void clear() {
-
+        clearImplementation();
+        System.out.println("\nStorage was cleared");
     }
 
-    @Override
     public void save(Resume r) {
-
+        Object key = getKey(r.getUuid());
+        saveImplementation(r, key);
     }
 
-    @Override
     public Resume get(String uuid) {
-        return null;
+        Object key = getKey(uuid);
+        return getImplementation(key);
     }
 
-    @Override
     public void delete(String uuid) {
-
+        Object key = getKey(uuid);
+        deleteImplementation(key);
     }
 
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
     public void update(Resume resume) {
-
+        Object key = getKey(resume.getUuid());
+        updateImplementation(resume, key);
     }
+
 }

@@ -7,40 +7,48 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
     private final List<Resume> storage = new ArrayList<>();
-    private final Resume Resume_1 = new Resume("uuid1");
+    //private final Resume Resume_1 = new Resume("uuid1");
 
-    @Override
-    protected void getColl() {
-        storage.get(storage.indexOf(Resume_1));
+    protected Object getKey(String uuid) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     @Override
-    protected void saveColl() {
-        storage.add(Resume_1);
+    protected Resume getImplementation(Object key) {
+        return storage.get((Integer) key);
     }
 
     @Override
-    protected void clearColl() {
+    protected void saveImplementation(Resume r, Object key) {
+        storage.add(r);
+    }
+
+    @Override
+    protected void clearImplementation() {
         storage.clear();
     }
 
     @Override
-    protected void deleteColl() {
-        storage.remove(Resume_1);
+    protected void deleteImplementation(Object key) {
+        storage.remove(key);
     }
 
-    @Override
-    protected void getAllColl() {
-        String[] allStorage = storage.toArray(new String[0]);
+
+    public Resume[] getAll() {
+        Resume[] allStorage = storage.toArray(new Resume[storage.size()]);
+        return allStorage;
     }
 
-    @Override
-    protected void SizeColl() {
-        storage.size();
+    public int size() {
+        return storage.size();
     }
 
-    @Override
-    protected void updateColl() {
-        storage.set(storage.indexOf(Resume_1), Resume_1);
+    protected void updateImplementation(Resume r, Object key) {
+        storage.set((Integer) key, r);
     }
 }

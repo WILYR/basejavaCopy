@@ -15,7 +15,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected int getResumeIndex(String uuid) {
+    protected Object getKey(String uuid) {
         for (int i = 0; i < sizeStorage; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
@@ -24,38 +24,4 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
-    @Override
-    protected void getColl() {
-
-    }
-
-    @Override
-    protected void saveColl() {
-
-    }
-
-    @Override
-    protected void clearColl() {
-
-    }
-
-    @Override
-    protected void deleteColl() {
-
-    }
-
-    @Override
-    protected void getAllColl() {
-
-    }
-
-    @Override
-    protected void SizeColl() {
-
-    }
-
-    @Override
-    protected void updateColl() {
-
-    }
 }
