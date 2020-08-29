@@ -19,25 +19,29 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getImplementation(Object key) {
+    protected Resume getRealization(Object key) {
         return storage.get((Integer) key);
     }
 
     @Override
-    protected void saveImplementation(Resume r, Object key) {
-        storage.add(r);
+    protected void saveRealization(Resume resume, Object key) {
+        storage.add(resume);
     }
 
     @Override
-    protected void clearImplementation() {
+    protected void clearRealization() {
         storage.clear();
     }
 
     @Override
-    protected void deleteImplementation(Object key) {
+    protected void deleteRealization(Object key) {
         storage.remove(key);
     }
 
+    @Override
+    protected boolean isExist(Object key) {
+        return key != null;
+    }
 
     public Resume[] getAll() {
         Resume[] allStorage = storage.toArray(new Resume[storage.size()]);
@@ -48,7 +52,8 @@ public class ListStorage extends AbstractStorage {
         return storage.size();
     }
 
-    protected void updateImplementation(Resume r, Object key) {
-        storage.set((Integer) key, r);
+    protected void updateRealization(Resume resume, Object key) {
+        storage.set((Integer) key, resume);
     }
+
 }

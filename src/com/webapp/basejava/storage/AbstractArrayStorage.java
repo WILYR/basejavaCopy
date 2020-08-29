@@ -12,19 +12,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int sizeStorage = 0;
 
-    protected abstract void remove(int indexUuid);
+    protected abstract void remove(int index);
 
     protected abstract void insert(Resume resume, int index);
 
     protected abstract Object getKey(String uuid);
 
     public int size() {
-        System.out.print("Size: ");
         return sizeStorage;
     }
 
     @Override
-    public Resume getImplementation(Object key) {
+    public Resume getRealization(Object key) {
         if ((Integer) key < 0) {
             throw new NotExistStorageException(storage[(Integer) key].getUuid());
         }
@@ -38,25 +37,25 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void clearImplementation() {
+    public void clearRealization() {
         Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
     }
 
     @Override
-    public void saveImplementation(Resume r, Object key) {
+    public void saveRealization(Resume resume, Object key) {
         if (sizeStorage == STORAGE_LIMIT) {
-            throw new StorageException("Storage overdraw", r.getUuid());
-        } else if ((Integer) getKey(r.getUuid()) > 0) {
-            throw new ExistStorageException(r.getUuid());
+            throw new StorageException("Storage overdraw", resume.getUuid());
+        } else if ((Integer) getKey(resume.getUuid()) > 0) {
+            throw new ExistStorageException(resume.getUuid());
         }
-        insert(r, (Integer) key);
-        System.out.println("Resume " + r + " save");
+        insert(resume, (Integer) key);
+        System.out.println("Resume " + resume + " save");
         sizeStorage++;
     }
 
     @Override
-    public void deleteImplementation(Object key) {
+    public void deleteRealization(Object key) {
         if ((Integer) key < 0) {
             throw new NotExistStorageException(storage[(Integer) key].getUuid());
         }
@@ -66,11 +65,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateImplementation(Resume r, Object key) {
+    public void updateRealization(Resume resume, Object key) {
         if ((Integer) key < 0) {
-            throw new NotExistStorageException(r.getUuid());
+            throw new NotExistStorageException(resume.getUuid());
         }
-        storage[(Integer) key] = r;
+        storage[(Integer) key] = resume;
         System.out.println("Resume " + ((Integer) key + 1) + " successfully update with " + storage[(Integer) key]);
+    }
+
+    @Override
+    protected boolean isExist(Object key) {
+        return (Integer) key >= 0;
     }
 }
