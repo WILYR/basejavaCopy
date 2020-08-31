@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(r3, storage.get(r3.getUuid()));
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
         storage.get("dummy");
     }
@@ -59,15 +59,7 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(0, storage.size());
     }
 
-    @Test
-    public void save() throws Exception {
-        Resume r4 = new Resume("uuid4");
-        storage.save(r4);
-        Assert.assertEquals(4, storage.size());
-        Assert.assertEquals(r4, storage.get(r4.getUuid()));
-    }
-
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
         int sizeUntilDelete = storage.size();
         storage.delete("uuid2");
@@ -75,15 +67,21 @@ public abstract class AbstractArrayStorageTest {
         storage.get("uuid2");
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() throws Exception {
         storage.delete("dummy");
     }
 
-    @Test(expected = NotExistStorageException.class)
+    @Test
     public void update() throws Exception {
-        Resume r5 = new Resume("uuid5");
-        storage.update(r5);
+        Resume underupdate = r1;
+        storage.update(r1);
+        underupdate.equals(r1);
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void updateNotExist() throws Exception {
+        storage.update(new Resume("uuid5"));
     }
 
     @Test(expected = StorageException.class)
@@ -97,6 +95,14 @@ public abstract class AbstractArrayStorageTest {
             Assert.fail("Resume base error");
         }
         storage.save(new Resume());
+    }
+
+    @Test
+    public void save() throws Exception {
+        Resume r4 = new Resume("uuid4");
+        storage.save(r4);
+        Assert.assertEquals(4, storage.size());
+        Assert.assertEquals(r4, storage.get(r4.getUuid()));
     }
 
 }

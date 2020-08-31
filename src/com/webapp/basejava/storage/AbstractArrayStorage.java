@@ -1,7 +1,5 @@
 package com.webapp.basejava.storage;
 
-import com.webapp.basejava.exeption.ExistStorageException;
-import com.webapp.basejava.exeption.NotExistStorageException;
 import com.webapp.basejava.exeption.StorageException;
 import com.webapp.basejava.model.Resume;
 
@@ -23,10 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getRealization(Object key) {
-        if ((Integer) key < 0) {
-            throw new NotExistStorageException(storage[(Integer) key].getUuid());
-        }
+    public Resume getSet(Object key) {
         System.out.print("\nGet " + storage[(Integer) key] + ": ");
         return storage[(Integer) key];
     }
@@ -37,38 +32,32 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void clearRealization() {
+    public void clearSet() {
         Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
     }
 
     @Override
-    public void saveRealization(Resume resume, Object key) {
+    public void saveSet(Resume resume, Object key) {
         if (sizeStorage == STORAGE_LIMIT) {
             throw new StorageException("Storage overdraw", resume.getUuid());
-        } else if ((Integer) getKey(resume.getUuid()) > 0) {
-            throw new ExistStorageException(resume.getUuid());
+        } else {
+            insert(resume, (Integer) key);
+            System.out.println("Resume " + resume + " save");
+            sizeStorage++;
         }
-        insert(resume, (Integer) key);
-        System.out.println("Resume " + resume + " save");
-        sizeStorage++;
     }
 
     @Override
-    public void deleteRealization(Object key) {
-        if ((Integer) key < 0) {
-            throw new NotExistStorageException(storage[(Integer) key].getUuid());
-        }
+    public void deleteSet(Object key) {
         System.out.println("Resume " + storage[(Integer) key] + " delete");
         remove((Integer) key);
+        storage[sizeStorage - 1] = null;
         sizeStorage--;
     }
 
     @Override
-    public void updateRealization(Resume resume, Object key) {
-        if ((Integer) key < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+    public void updateSet(Resume resume, Object key) {
         storage[(Integer) key] = resume;
         System.out.println("Resume " + ((Integer) key + 1) + " successfully update with " + storage[(Integer) key]);
     }
