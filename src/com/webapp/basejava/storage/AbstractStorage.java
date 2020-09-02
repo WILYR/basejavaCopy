@@ -5,46 +5,46 @@ import com.webapp.basejava.exeption.NotExistStorageException;
 import com.webapp.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected abstract void clearSet();
+    protected abstract void doClear();
 
-    protected abstract void saveSet(Resume resume, Object key);
+    protected abstract void doSave(Resume resume, Object key);
 
     protected abstract Object getKey(String uuid);
 
-    protected abstract Resume getSet(Object key);
+    protected abstract Resume doGet(Object key);
 
-    protected abstract void deleteSet(Object key);
+    protected abstract void doDelete(Object key);
 
-    protected abstract void updateSet(Resume resume, Object key);
+    protected abstract void doUpdate(Resume resume, Object key);
 
     protected abstract boolean isExist(Object key);
 
     public void clear() {
-        clearSet();
+        doClear();
         System.out.println("\nStorage was cleared");
     }
 
     public void save(Resume resume) {
-        Object key = notExistKey(resume.getUuid());
-        saveSet(resume, key);
+        Object key = getKeyIfResumeNotExist(resume.getUuid());
+        doSave(resume, key);
     }
 
     public Resume get(String uuid) {
-        Object key = ExistKey(uuid);
-        return getSet(key);
+        Object key = getKeyIfResumeExist(uuid);
+        return doGet(key);
     }
 
     public void delete(String uuid) {
-        Object key = ExistKey(uuid);
-        deleteSet(key);
+        Object key = getKeyIfResumeExist(uuid);
+        doDelete(key);
     }
 
     public void update(Resume resume) {
-        Object key = ExistKey(resume.getUuid());
-        updateSet(resume, key);
+        Object key = getKeyIfResumeExist(resume.getUuid());
+        doUpdate(resume, key);
     }
 
-    private Object notExistKey(String uuid) {
+    private Object getKeyIfResumeNotExist(String uuid) {
         Object key = getKey(uuid);
         if (isExist(key)) {
             throw new ExistStorageException(uuid);
@@ -52,7 +52,7 @@ public abstract class AbstractStorage implements Storage {
         return key;
     }
 
-    private Object ExistKey(String uuid) {
+    private Object getKeyIfResumeExist(String uuid) {
         Object key = getKey(uuid);
         if (!isExist(key)) {
             throw new NotExistStorageException(uuid);

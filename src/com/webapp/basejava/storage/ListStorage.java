@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
     private final List<Resume> storage = new ArrayList<>();
-    //private final Resume Resume_1 = new Resume("uuid1");
 
     protected Object getKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
@@ -19,23 +18,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getSet(Object key) {
+    protected Resume doGet(Object key) {
         return storage.get((Integer) key);
     }
 
     @Override
-    protected void saveSet(Resume resume, Object key) {
+    protected void doSave(Resume resume, Object key) {
         storage.add(resume);
     }
 
     @Override
-    protected void clearSet() {
+    protected void doClear() {
         storage.clear();
     }
 
     @Override
-    protected void deleteSet(Object key) {
-        storage.remove(key);
+    protected void doDelete(Object key) {
+        storage.remove(((Integer)key).intValue());
     }
 
     @Override
@@ -51,7 +50,7 @@ public class ListStorage extends AbstractStorage {
         return storage.size();
     }
 
-    protected void updateSet(Resume resume, Object key) {
+    protected void doUpdate(Resume resume, Object key) {
         storage.set((Integer) key, resume);
     }
 

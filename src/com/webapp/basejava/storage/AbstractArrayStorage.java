@@ -21,7 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getSet(Object key) {
+    public Resume doGet(Object key) {
         System.out.print("\nGet " + storage[(Integer) key] + ": ");
         return storage[(Integer) key];
     }
@@ -32,13 +32,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void clearSet() {
+    public void doClear() {
         Arrays.fill(storage, 0, sizeStorage, null);
         sizeStorage = 0;
     }
 
     @Override
-    public void saveSet(Resume resume, Object key) {
+    public void doSave(Resume resume, Object key) {
         if (sizeStorage == STORAGE_LIMIT) {
             throw new StorageException("Storage overdraw", resume.getUuid());
         } else {
@@ -49,7 +49,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void deleteSet(Object key) {
+    public void doDelete(Object key) {
         System.out.println("Resume " + storage[(Integer) key] + " delete");
         remove((Integer) key);
         storage[sizeStorage - 1] = null;
@@ -57,7 +57,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateSet(Resume resume, Object key) {
+    public void doUpdate(Resume resume, Object key) {
         storage[(Integer) key] = resume;
         System.out.println("Resume " + ((Integer) key + 1) + " successfully update with " + storage[(Integer) key]);
     }

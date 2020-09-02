@@ -1,7 +1,7 @@
 package com.webapp.basejava.storage;
 
+import com.webapp.basejava.exeption.ExistStorageException;
 import com.webapp.basejava.exeption.NotExistStorageException;
-import com.webapp.basejava.exeption.StorageException;
 import com.webapp.basejava.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public abstract class AbstractArrayStorageTest {
 
-    private Storage storage;
+    protected Storage storage;
 
     private static final Resume r1 = new Resume("uuid1");
     private static final Resume r2 = new Resume("uuid2");
@@ -84,25 +84,17 @@ public abstract class AbstractArrayStorageTest {
         storage.update(new Resume("uuid5"));
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverflow() throws Exception {
-        storage.clear();
-        try {
-            for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            Assert.fail("Resume base error");
-        }
-        storage.save(new Resume());
-    }
-
     @Test
     public void save() throws Exception {
         Resume r4 = new Resume("uuid4");
         storage.save(r4);
         Assert.assertEquals(4, storage.size());
         Assert.assertEquals(r4, storage.get(r4.getUuid()));
+    }
+
+    @Test(expected = ExistStorageException.class)
+    public void saveExist() throws Exception {
+        storage.save(r1);
     }
 
 }

@@ -15,10 +15,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void remove(int index) {
-        int insertIndex = sizeStorage - index - 1;
-        if (insertIndex > 0) {
-            System.arraycopy(storage, index + 1, storage, index, sizeStorage - index - 1);
-        }
+        System.arraycopy(storage, index + 1, storage, index, sizeStorage - index - 1);
     }
 
     @Override
