@@ -1,6 +1,6 @@
 package com.webapp.basejava.storage;
 
-public class ListStorageTest extends AbstractArrayStorageTest {
+public class ListStorageTest extends AbstractStorageTest {
     public ListStorageTest() {
         super(new ListStorage());
     }

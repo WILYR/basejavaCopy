@@ -5,7 +5,7 @@ import com.webapp.basejava.model.Resume;
 import java.util.*;
 
 public class MapStorage extends AbstractStorage {
-    private final Map<String, Resume> treeMap = new TreeMap<String, Resume>();
+    private final Map<String, Resume> treeMap = new TreeMap<>();
 
     @Override
     protected void doClear() {
@@ -44,9 +44,8 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        Collection<Resume> all = new ArrayList<>();
-        all = treeMap.values();
-        return all.toArray(new Resume[treeMap.size()]);
+        Collection<Resume> resumes = treeMap.values();
+        return resumes.toArray(new Resume[treeMap.size()]);
     }
 
     @Override
