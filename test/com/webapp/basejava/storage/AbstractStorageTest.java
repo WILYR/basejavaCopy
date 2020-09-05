@@ -75,8 +75,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() throws Exception {
         Resume r4 = new Resume("uuid4");
-        storage.update(r4);
-        Assert.assertTrue(r4 == storage.get("uuid4"));
+        storage.save(r4);
+        storage.update(r4 = r1);
+        Assert.assertTrue(r4 == storage.get("uuid1"));
     }
 
     @Test(expected = NotExistStorageException.class)
