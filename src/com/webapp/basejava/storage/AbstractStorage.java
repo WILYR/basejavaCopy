@@ -4,6 +4,9 @@ import com.webapp.basejava.exeption.ExistStorageException;
 import com.webapp.basejava.exeption.NotExistStorageException;
 import com.webapp.basejava.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
     protected abstract void doClear();
 
@@ -18,6 +21,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void doUpdate(Resume resume, Object key);
 
     protected abstract boolean isExist(Object key);
+
+    protected abstract List<Resume> doGetAllSorted();
 
     public void clear() {
         doClear();
@@ -44,6 +49,12 @@ public abstract class AbstractStorage implements Storage {
         doUpdate(resume, key);
     }
 
+    public List<Resume> getAllSorted() {
+        List<Resume> list = doGetAllSorted();
+        Collections.sort(list);
+        return list;
+    }
+
     private Object getKeyIfResumeNotExist(String uuid) {
         Object key = getKey(uuid);
         if (isExist(key)) {
@@ -59,4 +70,5 @@ public abstract class AbstractStorage implements Storage {
         }
         return key;
     }
+
 }

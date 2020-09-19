@@ -33,7 +33,7 @@ public class MainTestArrayStorage {
     }
 
     static void printAll() {
-        for (Resume r : STORAGE.getAll()) {
+        for (Resume r : STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

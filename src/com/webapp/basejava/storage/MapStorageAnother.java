@@ -4,8 +4,8 @@ import com.webapp.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
-    private final Map<String, Resume> treeMap = new TreeMap<>();
+public class MapStorageAnother extends AbstractStorage {
+    Map<String, Resume> treeMap = new TreeMap<>();
 
     @Override
     protected void doClear() {
@@ -14,32 +14,32 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doSave(Resume resume, Object key) {
-        treeMap.put((String) key, resume);
+        treeMap.put(resume.getUuid(), resume);
     }
 
     @Override
     protected Object getKey(String uuid) {
-        return uuid;
+        return treeMap.get(uuid);
     }
 
     @Override
     protected Resume doGet(Object key) {
-        return treeMap.get(key);
+        return (Resume) key;
     }
 
     @Override
     protected void doDelete(Object key) {
-        treeMap.remove(key);
+        treeMap.remove(((Resume) key).getUuid());
     }
 
     @Override
     protected void doUpdate(Resume resume, Object key) {
-        treeMap.put((String) key, resume);
+        treeMap.put(resume.getUuid(), resume);
     }
 
     @Override
     protected boolean isExist(Object key) {
-        return treeMap.containsKey(key);
+        return key != null;
     }
 
     @Override

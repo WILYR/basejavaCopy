@@ -7,13 +7,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    private static final Resume r1 = new Resume("uuid1");
-    private static final Resume r2 = new Resume("uuid2");
-    private static final Resume r3 = new Resume("uuid3");
+    private static final Resume r1 = new Resume("uuid1", "Name1");
+    private static final Resume r2 = new Resume("uuid2", "Name2");
+    private static final Resume r3 = new Resume("uuid3", "Name3");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -46,11 +49,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        Resume[] expectedResumes = storage.getAll();
-        Assert.assertEquals(3, expectedResumes.length);
-        Assert.assertEquals(r1, expectedResumes[0]);
-        Assert.assertEquals(r2, expectedResumes[1]);
-        Assert.assertEquals(r3, expectedResumes[2]);
+        List<Resume> expectedResumes = storage.getAllSorted();
+        Assert.assertEquals(3, expectedResumes.size());
+        Assert.assertEquals(expectedResumes, Arrays.asList(r1, r2, r3));
     }
 
     @Test
