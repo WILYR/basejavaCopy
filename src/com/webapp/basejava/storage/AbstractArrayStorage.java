@@ -29,8 +29,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     public List<Resume> doGetAllSorted() {
         System.out.println("\nGet All");
-        List<Resume> list = Arrays.asList(Arrays.copyOfRange(storage, 0, sizeStorage));
-        return list;
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, sizeStorage));
     }
 
     @Override

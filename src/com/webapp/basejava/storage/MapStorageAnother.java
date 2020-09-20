@@ -5,7 +5,7 @@ import com.webapp.basejava.model.Resume;
 import java.util.*;
 
 public class MapStorageAnother extends AbstractStorage {
-    Map<String, Resume> treeMap = new TreeMap<>();
+    private Map<String, Resume> treeMap = new TreeMap<>();
 
     @Override
     protected void doClear() {
@@ -44,8 +44,7 @@ public class MapStorageAnother extends AbstractStorage {
 
     @Override
     public List<Resume> doGetAllSorted() {
-        List<Resume> list = new ArrayList<>(treeMap.values());
-        return list;
+        return new ArrayList<>(treeMap.values());
     }
 
     @Override

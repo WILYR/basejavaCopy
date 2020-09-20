@@ -19,7 +19,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         System.arraycopy(storage, index + 1, storage, index, sizeStorage - index - 1);
     }
 
-    private Comparator<Resume> ResumeComparator = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+    private Comparator<Resume> ResumeComparator = Comparator.comparing(Resume::getUuid);
 
     @Override
     protected Object getKey(String uuid) {
